@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Full jQuery version -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> <!-- Added Poppins font -->
+
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+           /* position: fixed; */
+           /* top: 0; */
+           width: 100%;
+           height: 65px;
+           background-color: #1d1d1d;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           font-size: 1.1rem;
+            /* overflow: hidden; */
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: #fff;
+            padding: 10px 15px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+        .carousel-item img {
+            width: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: black !important;
+        }
+
+        .modal-body p {
+            font-size: 1.1rem;
+            color: black;
+        }
+
+        .modal-body label {
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .modal-footer {
+            justify-content: center;
+        }
+
+        #registerGender .form-check {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="#">Fitness Tracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="homepage.html">Home</a>
+            </li>
+            <li class="nav-item" id="bmiNav" style="display: none;">
+                <a class="nav-link" href="BMI Calculator Page.html">BMI Calculator</a>
+            </li>
+            <li class="nav-item" id="activityNav" style="display: none;">
+                <a class="nav-link" href="ActivityTrackerPage.html">Activity Tracker</a>
+            </li>
+            <li class="nav-item" id="nutritionNav" style="display: none;">
+                <a class="nav-link" href="NutritionTracker.html">Nutrition Tracker</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="loginLink" data-toggle="modal" data-target="#loginModal">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="registerLink" data-toggle="modal" data-target="#registerModal">Register</a>
+            </li>
+            <li class="nav-item" id="logoutNav" style="display: none;">
+                <a class="nav-link" href="#" id="logoutLink">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Image Slider (Carousel) -->
+<div id="fitnessCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://static.vecteezy.com/system/resources/previews/038/448/721/non_2x/ai-generated-a-portrait-of-man-with-barbell-in-the-gym-for-fitness-generative-ai-free-photo.jpg" class="d-block w-100 " alt="Fitness Image 1" style="height: 500px;">
+        </div>
+        <div class="carousel-item">
+            <img src="https://kellysthoughtsonthings.com/wp-content/uploads/2020/12/AdobeStock_19563792772-1024x688.jpg.webp" class="d-block w-100" alt="Fitness Image 2" style="height: 500px;">
+        </div>
+        <div class="carousel-item">
+            <img src="https://www.energy.fit/cdn/shop/articles/pexels-victor-freitas-2261485_1.jpg?v=1633712382&width=1500" class="d-block w-100" alt="Fitness Image 3" style="height: 500px;">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#fitnessCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#fitnessCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<!-- Welcome Section -->
+<section id="home" class="container text-center my-5">
+    <h2>Welcome to Your Fitness Tracker</h2>
+    <p>Track your progress, calculate your BMI, log activities, and stay fit!</p>
+</section>
+
+<!-- Footer Section -->
+<div class="footer">
+    <p>&copy; 2025 Fitness Tracker. All Rights Reserved.</p>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email address</label>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerName">Name</label>
+                        <input type="text" class="form-control" id="registerName" placeholder="Enter Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" class="form-control" id="registerEmail" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" class="form-control" id="registerPassword" placeholder="Enter password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerMobile">Mobile No.</label>
+                        <input type="number" class="form-control" id="registerMobile" placeholder="Enter Mobile" required>
+                    </div>
+                    <div id="registerGender">
+                        <label>Gender</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                            <label class="form-check-label" for="male">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="female" value="Female" checked>
+                            <label class="form-check-label" for="female">Female</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap and jQuery Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Check if the user is logged in
+    function checkLoginStatus() {
+        return sessionStorage.getItem("loggedIn") === "true";
+    }
+
+    // Update the UI based on the login status
+    function updateUI() {
+        const isLoggedIn = checkLoginStatus();
+        if (isLoggedIn) {
+            $("#loginLink").hide();
+            $("#registerLink").hide();
+            $("#logoutNav").show();
+        } else {
+            $("#loginLink").show();
+            $("#registerLink").show();
+            $("#logoutNav").hide();
+        }
+
+        // Show/hide restricted pages based on login status
+        if (isLoggedIn) {
+            $("#bmiNav").show();
+            $("#activityNav").show();
+            $("#nutritionNav").show();
+        } else {
+            $("#bmiNav").hide();
+            $("#activityNav").hide();
+            $("#nutritionNav").hide();
+        }
+    }
+
+    // Handle login form submission
+    $("#loginForm").submit(function(e) {
+        e.preventDefault();
+        var email = $("#loginEmail").val();
+        var password = $("#loginPassword").val();
+
+        $.ajax({
+            url: "https://localhost:7210/api/fitness/LoginUsr", 
+            method: "POST",
+            data: { email: email, password: password },
+            success: function(response) {
+                if (response.success) {
+                    console.log(response)
+                    sessionStorage.setItem("loggedIn", "true");
+                    sessionStorage.setItem("userId", response.userId);
+                    alert("Login successful!");
+                    $('#loginModal').modal('hide');
+                    updateUI();
+                } else {
+                    alert(response.message); 
+                }
+            },
+            error: function(error) {
+                alert("Login failed. Please try again.");
+            }
+        });
+    });
+
+    // Handle register form submission
+    $("#registerForm").submit(function(e) {
+        e.preventDefault();
+        var name = $("#registerName").val();
+        var email = $("#registerEmail").val();
+        var password = $("#registerPassword").val();
+        var mobile = $("#registerMobile").val();
+        var gender = $("input[name='gender']:checked").val();
+
+        $.ajax({
+            url: "https://localhost:7210/api/fitness/registerUser", 
+            method: "POST",
+            data: {
+                name: name,
+                email: email,
+                password: password,
+                mobile: mobile,
+                gender: gender
+            },
+            success: function(response) {
+                alert("Registration successful!");
+                sessionStorage.setItem("userId", response.userId);
+                $('#registerModal').modal('hide');
+            },
+            error: function(error) {
+                alert("Registration failed. Please try again.");
+            }
+        });
+    });
+
+    // Handle logout
+    $("#logoutLink").click(function(e) {
+        e.preventDefault();
+        sessionStorage.removeItem("loggedIn");
+        sessionStorage.removeItem("userId");
+        updateUI();
+        alert("Logged out successfully.");
+    });
+
+    // On page load
+    $(document).ready(function() {
+        updateUI();
+        // Show login modal when trying to access restricted pages
+        $("#bmiNav, #activityNav, #nutritionNav").click(function(e) {
+            if (!checkLoginStatus()) {
+                e.preventDefault();
+                $('#loginModal').modal('show');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
